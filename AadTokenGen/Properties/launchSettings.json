@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AadTokenGen": {
+      "commandName": "Project",
+      "commandLineArgs": "user1@damirdobricdaenet.onmicrosoft.com 328f0a0a-3f19-448c-8f53-e290feba98bf https://damirdobricdaenet.onmicrosoft.com/WebApiDesktop http://netsummitnativeap 3b0f78fd-01d5-4c43-a2ae-3a6f6b8cabe7"
+    }
+  }
+}

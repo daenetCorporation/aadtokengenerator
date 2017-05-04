@@ -1,0 +1,3 @@
+﻿
+userName,									clientId,							resource,								redirectUri,				authority = null
+user1@YOURDOMAIN.onmicrosoft.com		328**CLIENTID**bf		https://YOURDOMAIN.onmicrosoft.com/YOURAPPNAME   http://netsummitnativeapp 3b0f78fd-01d5-4c43-a2ae-3a6f6b8cabe7

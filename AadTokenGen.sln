@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26424.2
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AadTokenGen", "AadTokenGen\AadTokenGen.csproj", "{167076DC-9C3D-4897-B22F-B2B329D14EFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddTokenGenDotNet", "AddTokenGenDotNet\AddTokenGenDotNet.csproj", "{AB93BB7B-A926-4CF6-9555-E0460418AE0E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{167076DC-9C3D-4897-B22F-B2B329D14EFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{167076DC-9C3D-4897-B22F-B2B329D14EFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{167076DC-9C3D-4897-B22F-B2B329D14EFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{167076DC-9C3D-4897-B22F-B2B329D14EFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB93BB7B-A926-4CF6-9555-E0460418AE0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB93BB7B-A926-4CF6-9555-E0460418AE0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB93BB7B-A926-4CF6-9555-E0460418AE0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB93BB7B-A926-4CF6-9555-E0460418AE0E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
