@@ -5,6 +5,8 @@ namespace AadTokenGen
 {
     class Program
     {
+        // WARNING: Input Argument are not validated!
+        // Enter arguments exactly in expected order.
         static void Main(string[] args)
         {
             Console.WriteLine("Genereting token...");
