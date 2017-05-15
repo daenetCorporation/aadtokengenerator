@@ -25,9 +25,7 @@ namespace AadTokenGen
             else
                 authContext = new AuthenticationContext("https://login.microsoftonline.com/common");
 
-            UserCredential uc = new UserCredential(userName);
-
-            AuthenticationResult result2 =
+           AuthenticationResult result2 =
                 authContext.AcquireTokenAsync(resource,
                 clientId,
                 new Uri(redirectUri), null).Result;
