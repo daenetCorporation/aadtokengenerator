@@ -1,6 +1,6 @@
 # AAD Token Generator tool
 Creates OAuth tokens by using of Azure Active Directory.
-Currentlly .NET Desktop version (*AddTokenGenDotNet*) works only. .NET Core version does not implement some token related core functionalities yet.
+Currentlly .NET Desktop version (*AddTokenGenDotNet*) is supported only. .NET Core version does not implement some token related core functionalities yet.
 
 **Usage**
 aadtokengendotnet.exe userName clientId resource redirectUri [optional authority]
