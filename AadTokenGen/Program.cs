@@ -1,15 +1,27 @@
-﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
+﻿using Microsoft.Extensions.Configuration.CommandLine;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
 
 namespace AadTokenGen
 {
     class Program
     {
-        // WARNING: Input Argument are not validated!
+        // WARNING: Input Arguments are currentlly not validated!
         // Enter arguments exactly in expected order.
         static void Main(string[] args)
         {
             Console.WriteLine("Genereting token...");
+
+            // TODO..
+            //CommandLineConfigurationProvider cmdLineConfig = new CommandLineConfigurationProvider(args);
+            //cmdLineConfig.Load();
+            //string userName;
+            //cmdLineConfig.TryGet("userName", out userName);
+
+            //string clientId;
+            //if (!cmdLineConfig.TryGet("clientId", out clientId))
+            //    throw new Exception("'clientId' argument must be specified.");
+
 
             var token = createToken(args[0], args[1], args[2], args[3], args[4]);
 
@@ -25,12 +37,25 @@ namespace AadTokenGen
             else
                 authContext = new AuthenticationContext("https://login.microsoftonline.com/common");
 
-           AuthenticationResult result2 =
-                authContext.AcquireTokenAsync(resource,
-                clientId,
-                new Uri(redirectUri), null).Result;
+            string aHeader;
 
-                var aHeader = result2.CreateAuthorizationHeader();
+            if (userName == null)
+            {
+                AuthenticationResult result =
+                     authContext.AcquireTokenAsync(resource,
+                     clientId,
+                     new Uri(redirectUri), null).Result;
+
+                aHeader = result.CreateAuthorizationHeader();              
+            }
+            else
+            {
+                AuthenticationResult result =
+                     authContext.AcquireTokenAsync(resource, clientId,
+                     new UserCredential(userName)).Result;
+
+                aHeader = result.CreateAuthorizationHeader();
+            }
 
             return aHeader;
         }
