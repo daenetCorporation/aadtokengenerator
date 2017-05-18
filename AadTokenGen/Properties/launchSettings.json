@@ -2,7 +2,7 @@
   "profiles": {
     "AadTokenGen": {
       "commandName": "Project",
-      "commandLineArgs": "--userName=aaa --clientId=212 "
+      "commandLineArgs": "--userName=user1@YOURDOMAIN.onmicrosoft.com --clientId=328**CLIENTID**bf  --resource=https://YOURDOMAIN.onmicrosoft.com/YOURAPPNAME --redirectUri=http://netsummitnativeapp --authority=3b0f78fd-01d5-4c43-a2ae-3a6f6b8cabe7 "
     }
   }
 }
