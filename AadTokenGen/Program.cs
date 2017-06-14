@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration.CommandLine;
+
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
 
@@ -59,5 +60,26 @@ namespace AadTokenGen
 
             return aHeader;
         }
+
+        // NOT Used. Test for MSAL lib.
+        //protected async void createTokenByMsal()
+        //{
+        //    Microsoft.Identity.Client.PublicClientApplication myApp = new Microsoft.Identity.Client.PublicClientApplication("328f0a0a-3f19-448c-8f53-e290feba98bf");
+        //    //// let's see if we have a user in our belly already
+        //    //try
+        //    //{
+        //    //    ClientAuthentication
+        //    //    AuthenticationResult ar =
+        //    //        await App.PCA.AcquireTokenSilentAsync(App.Scopes, App.PCA.Users.FirstOrDefault());
+        //    //    RefreshUserData(ar.AccessToken);
+        //    //    btnSignInSignOut.Text = "Sign out";
+        //    //}
+        //    //catch
+        //    //{
+        //    //    // doesn't matter, we go in interactive more
+        //    //    btnSignInSignOut.Text = "Sign in";
+        //    //}
+        //}
+
     }
 }
