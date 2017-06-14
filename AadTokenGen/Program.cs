@@ -11,22 +11,43 @@ namespace AadTokenGen
         // Enter arguments exactly in expected order.
         static void Main(string[] args)
         {
-            Console.WriteLine("Genereting token...");
+            try
+            {
+                Console.WriteLine("Genereting token...");
+                CommandLineConfigurationProvider cmdLineConfig = new CommandLineConfigurationProvider(args);
+                cmdLineConfig.Load();
 
-            // TODO..
-            //CommandLineConfigurationProvider cmdLineConfig = new CommandLineConfigurationProvider(args);
-            //cmdLineConfig.Load();
-            //string userName;
-            //cmdLineConfig.TryGet("userName", out userName);
+                string userName;
+                if (!cmdLineConfig.TryGet("userName", out userName))
+                    throw new Exception("'userName' argument must be specified.");
 
-            //string clientId;
-            //if (!cmdLineConfig.TryGet("clientId", out clientId))
-            //    throw new Exception("'clientId' argument must be specified.");
+                string clientId;
+                if (!cmdLineConfig.TryGet("clientId", out clientId))
+                    throw new Exception("'clientId' argument must be specified.");
+
+                string resource;
+                if (!cmdLineConfig.TryGet("resource", out resource))
+                    throw new Exception("'resource' argument must be specified");
+
+                string redirectUri;
+                if (!cmdLineConfig.TryGet("redirectUri", out redirectUri))
+                    throw new Exception("'redirectUri' argument must be specified");
+
+                string authority;
+                cmdLineConfig.TryGet("authority", out authority);
+
+                var token = createToken(userName, clientId, resource, redirectUri, authority);
 
 
-            var token = createToken(args[0], args[1], args[2], args[3], args[4]);
-
-            Console.WriteLine(token);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(token);
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(e);
+                Console.ReadKey();
+            }
         }
 
         private static string createToken(string userName, string clientId, string resource, string redirectUri, string authority = null)
@@ -47,7 +68,7 @@ namespace AadTokenGen
                      clientId,
                      new Uri(redirectUri), null).Result;
 
-                aHeader = result.CreateAuthorizationHeader();              
+                aHeader = result.CreateAuthorizationHeader();
             }
             else
             {
