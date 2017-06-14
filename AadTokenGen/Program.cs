@@ -7,6 +7,10 @@ namespace AadTokenGen
 {
     class Program
     {
+        /// <summary>
+        /// NOT WORKING RIGHT NOW!!!!
+        /// </summary>
+        /// <param name="args"></param>
         // WARNING: Input Arguments are currentlly not validated!
         // Enter arguments exactly in expected order.
         static void Main(string[] args)

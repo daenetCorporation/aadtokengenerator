@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace AddTokenGenDotNet
 {
@@ -16,14 +17,19 @@ namespace AddTokenGenDotNet
             {
                 Console.WriteLine("Genereting token...");
 
-
                 CommandLineConfigurationProvider cmdLineConfig = new CommandLineConfigurationProvider(args);
 
                 cmdLineConfig.Load();
 
+                string secret = null;
                 string userName;
                 if (!cmdLineConfig.TryGet("userName", out userName))
-                    throw new Exception("'userName' argument must be specified.");
+                {
+                    if (!cmdLineConfig.TryGet("secret", out secret))
+                    {
+                        throw new Exception("'userName' or 'secret' argument must be specified.");
+                    }
+                }
 
                 string clientId;
                 if (!cmdLineConfig.TryGet("clientId", out clientId))
@@ -40,9 +46,13 @@ namespace AddTokenGenDotNet
                 string authority;
                 cmdLineConfig.TryGet("authority", out authority);
 
-                var token = createToken(userName, clientId, resource, redirectUri, authority);
+                string token;
 
-
+                if(String.IsNullOrEmpty(userName) == false)
+                    token = createTokenFromUserNamePwd(userName, clientId, resource, redirectUri, authority);
+                else
+                    token = createTokenFromClientCredentials(secret, clientId, resource, redirectUri, authority);
+                
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(token);
             }
@@ -59,25 +69,64 @@ namespace AddTokenGenDotNet
             //Console.WriteLine(token);
         }
 
-        private static string createToken(string userName, string clientId, string resource, string redirectUri, string authority = null)
+
+        private static AuthenticationContext getContext(string authority)
         {
+            var aadUrl = ConfigurationManager.AppSettings["AadAuthorityUrl"];
+
             AuthenticationContext authContext;
 
-            //http://www.cloudidentity.com/blog/2014/07/08/using-adal-net-to-authenticate-users-via-usernamepassword/
-
             if (authority != null)
-                authContext = new AuthenticationContext(string.Format("https://login.microsoftonline.com/{0}", authority));
+                authContext = new AuthenticationContext($"{aadUrl}/{authority}");
             else
-                authContext = new AuthenticationContext("https://login.microsoftonline.com/common");
+                authContext = new AuthenticationContext($"{aadUrl}/common");
 
-            UserCredential uc = new UserCredential(userName);
+            return authContext;
+        }
 
-            AuthenticationResult result2 =
+
+        /// <summary>
+        /// Creates token by using of grant_type=pasword.
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="clientId"></param>
+        /// <param name="resource"></param>
+        /// <param name="redirectUri"></param>
+        /// <param name="authority"></param>
+        /// <returns></returns>
+        private static string createTokenFromUserNamePwd(string userName, string clientId, string resource, string redirectUri, string authority = null)
+        {
+            AuthenticationContext authContext = getContext(authority);
+
+            //UserCredential uc = new UserCredential(userName);
+
+            AuthenticationResult authResult =
                 authContext.AcquireTokenAsync(resource,
                 clientId,
-                new Uri(redirectUri), new PlatformParameters(PromptBehavior.Always)).Result;
+                new Uri(redirectUri), new PlatformParameters(PromptBehavior.Auto)).Result;
 
-            var aHeader = result2.CreateAuthorizationHeader();
+            var aHeader = authResult.CreateAuthorizationHeader();
+
+            return aHeader;
+        }
+
+
+
+        /// <summary>
+        /// Creates token by using of grant_type=client_credentials.
+        /// </summary>
+        private static string createTokenFromClientCredentials(string secret, string clientId, string resource, string redirectUri, string authority = null)
+        {
+            AuthenticationContext authContext = getContext(authority);
+            
+            ClientCredential clientCred = new ClientCredential(clientId, secret);
+     
+            AuthenticationResult authResult =
+                authContext.AcquireTokenAsync(resource,
+                clientId,
+                new Uri(redirectUri), new PlatformParameters(PromptBehavior.Auto)).Result;
+
+            var aHeader = authResult.CreateAuthorizationHeader();
 
             return aHeader;
         }

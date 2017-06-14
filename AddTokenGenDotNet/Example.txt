@@ -1,3 +1,11 @@
 ﻿
 userName,									clientId,							resource,								redirectUri,				authority = null
 user1@YOURDOMAIN.onmicrosoft.com		328**CLIENTID**bf		https://YOURDOMAIN.onmicrosoft.com/YOURAPPNAME   http://netsummitnativeapp 3b0f78fd-01d5-4c43-a2ae-3a6f6b8cabe7
+
+Single tenant:
+--userName=user1@YOURDOMAIN.onmicrosoft.com --clientId=328**CLIENTID**bf  --resource=https://YOURDOMAIN.onmicrosoft.com/YOURAPPNAME --redirectUri=http://netsummitnativeapp --authority=3b0f78fd-01d5-4c43-a2ae-3a6f6b8cabe7 
+--secret=PAA3YkHl8isBE56oSmn95FX6NsV0xBgSFwqOPGJ3m3c= --clientId=328**CLIENTID**bf  --resource=https://YOURDOMAIN.onmicrosoft.com/YOURAPPNAME --redirectUri=http://netsummitnativeapp --authority=3b0f78fd-01d5-4c43-a2ae-3a6f6b8cabe7 
+
+Multitenant:
+--secret=PAA***m3c= --clientId=9d***16a  --resource=https://MYDOMAIN.onmicrosoft.de/MYSERVICEAPP --redirectUri=http://myclientapp.com
+
