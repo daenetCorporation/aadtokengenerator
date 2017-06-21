@@ -122,9 +122,7 @@ namespace AddTokenGenDotNet
             ClientCredential clientCred = new ClientCredential(clientId, secret);
      
             AuthenticationResult authResult =
-                authContext.AcquireTokenAsync(resource,
-                clientId,
-                new Uri(redirectUri), new PlatformParameters(PromptBehavior.Auto)).Result;
+                authContext.AcquireTokenAsync(resource, clientCred).Result;
 
             var aHeader = authResult.CreateAuthorizationHeader();
 
