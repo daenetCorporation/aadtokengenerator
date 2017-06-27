@@ -58,9 +58,14 @@ namespace AddTokenGenDotNet
             }
             catch (Exception e)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(e);
-                Console.ReadKey();
+               
+                if (e != null)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(e);
+                }
+                Console.ResetColor();
+                Console.ReadLine();
             }
 
 
