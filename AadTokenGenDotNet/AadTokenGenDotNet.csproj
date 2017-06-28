@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{AB93BB7B-A926-4CF6-9555-E0460418AE0E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>AddTokenGenDotNet</RootNamespace>
-    <AssemblyName>AddTokenGenDotNet</AssemblyName>
+    <RootNamespace>AadTokenGenDotNet</RootNamespace>
+    <AssemblyName>AadTokenGenDotNet</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

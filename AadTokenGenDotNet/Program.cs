@@ -1,11 +1,7 @@
-﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using Microsoft.Extensions.Configuration.CommandLine;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Configuration;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.Extensions.Configuration.CommandLine;
 
 namespace AddTokenGenDotNet
 {
@@ -21,60 +17,46 @@ namespace AddTokenGenDotNet
 
                 cmdLineConfig.Load();
 
-                string secret = null;
-                string userName;
-                if (!cmdLineConfig.TryGet("userName", out userName))
-                {
-                    if (!cmdLineConfig.TryGet("secret", out secret))
-                    {
-                        throw new Exception("'userName' or 'secret' argument must be specified.");
-                    }
-                }
-
-                string clientId;
-                if (!cmdLineConfig.TryGet("clientId", out clientId))
+                if (!cmdLineConfig.TryGet("clientId", out string clientId))
                     throw new Exception("'clientId' argument must be specified.");
-
-                string resource;
-                if (!cmdLineConfig.TryGet("resource", out resource))
+                
+                if (!cmdLineConfig.TryGet("resource", out string resource))
                     throw new Exception("'resource' argument must be specified");
 
-                string redirectUri;
-                if (!cmdLineConfig.TryGet("redirectUri", out redirectUri))
+                if (!cmdLineConfig.TryGet("redirectUri", out string redirectUri))
                     throw new Exception("'redirectUri' argument must be specified");
 
-                string authority;
-                cmdLineConfig.TryGet("authority", out authority);
+                cmdLineConfig.TryGet("authority", out string authority);
+                cmdLineConfig.TryGet("secret", out string secret);
 
                 string token;
-
-                if(String.IsNullOrEmpty(userName) == false)
-                    token = createTokenFromUserNamePwd(userName, clientId, resource, redirectUri, authority);
+                if (string.IsNullOrEmpty(secret) == true)
+                    token = createTokenFromClientCredentials(clientId, resource, redirectUri, authority);
                 else
-                    token = createTokenFromClientCredentials(secret, clientId, resource, redirectUri, authority);
-                
+                {
+                    token = createTokenFromClientSecret(secret, clientId, resource, redirectUri, authority);
+                }
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(token);
             }
             catch (Exception e)
             {
-               
                 if (e != null)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(e);
+                    Console.WriteLine("Acquiring a token failed with the following error"+"\n" + e);                    
                 }
                 Console.ResetColor();
+                Console.ReadKey();
                 Console.ReadLine();
             }
-
-
-            //var token = createToken(args[0], args[1], args[2], args[3], args.Length == 5 ? args[4] : null);
-
-            //Console.WriteLine(token);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="authority"></param>
+        /// <returns></returns>
         private static AuthenticationContext getContext(string authority)
         {
             var aadUrl = ConfigurationManager.AppSettings["AadAuthorityUrl"];
@@ -89,7 +71,6 @@ namespace AddTokenGenDotNet
             return authContext;
         }
 
-
         /// <summary>
         /// Creates token by using of grant_type=pasword.
         /// </summary>
@@ -99,11 +80,9 @@ namespace AddTokenGenDotNet
         /// <param name="redirectUri"></param>
         /// <param name="authority"></param>
         /// <returns></returns>
-        private static string createTokenFromUserNamePwd(string userName, string clientId, string resource, string redirectUri, string authority = null)
+        private static string createTokenFromClientCredentials(string clientId, string resource, string redirectUri, string authority = null)
         {
             AuthenticationContext authContext = getContext(authority);
-
-            //UserCredential uc = new UserCredential(userName);
 
             AuthenticationResult authResult =
                 authContext.AcquireTokenAsync(resource,
@@ -120,7 +99,7 @@ namespace AddTokenGenDotNet
         /// <summary>
         /// Creates token by using of grant_type=client_credentials.
         /// </summary>
-        private static string createTokenFromClientCredentials(string secret, string clientId, string resource, string redirectUri, string authority = null)
+        private static string createTokenFromClientSecret(string secret, string clientId, string resource, string redirectUri, string authority = null)
         {
             AuthenticationContext authContext = getContext(authority);
             
