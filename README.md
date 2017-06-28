@@ -1,6 +1,6 @@
 # AAD Token Generator tool
 Creates OAuth tokens by using of Azure Active Directory.
-Currentlly .NET Desktop version (*AddTokenGenDotNet*) is supported only. .NET Core version does not implement some token related core functionalities yet.
+Currentlly .NET Desktop version (*AadTokenGenDotNet*) is supported only. .NET Core version does not implement some token related core functionalities yet.
 
 **Usage**
 aadtokengendotnet.exe clientId resource redirectUri [optional authority] [optional secret]
@@ -12,12 +12,12 @@ If secret is null, sign-in dialog window will be showed for user credential inpu
 **Example 1**
 *Client credentials scenario*
 
-aadtokengendotnet.exe --clientId=328***********bf --resource=https://YOURDOMAIN.onmicrosoft.com/YOURAPPNAME --redirectUri=http://netsummitnativeapp
+aadtokengendotnet.exe --clientId=YOURCLIENTID --resource=https://YOURDOMAIN.onmicrosoft.com/YOURAPPNAME --redirectUri=http://netsummitnativeapp
 
 **Example 2**
 *Client secret scenario*
 
-aadTokenGenDotNet.exe --secret=O3F******h0k= --clientId=6f8b2********917f4 --resource=https://YOURDOMAIN.onmicrosoft.de/YOURAPPNAME --redirectUri=http://netsummitnativeapp
+aadTokenGenDotNet.exe --secret=YOURSECRETKEY --clientId=YOURCLIENTID --resource=https://YOURDOMAIN.onmicrosoft.de/YOURAPPNAME --redirectUri=http://netsummitnativeapp
 
 **Result example**
 
