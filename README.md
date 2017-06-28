@@ -17,7 +17,8 @@ aadtokengendotnet.exe user1@YOURDOMAIN.onmicrosoft.com 328**CLIENTID**bf https:/
 
 **Example 2**
 *Client secret scenario*
-AadTokenGenDotNet.exe --secret=O3F******h0k= --clientId=6f8b2*******917f4  --resource=https://iottsystems.onmicrosoft.de/YOURAPPNAME --redirectUri=http://netsummitnativeapp 3b0***be7
+AadTokenGenDotNet.exe --secret=O3F******h0k= --clientId=6f8b2********917f4  --resource=https://iottsystems.onmicrosoft.de/YOURAPPNAME --redirectUri=http://netsummitnativeapp 3b0***be7
+
 **Result example**
 
 Genereting token...
