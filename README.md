@@ -3,21 +3,21 @@ Creates OAuth tokens by using of Azure Active Directory.
 Currentlly .NET Desktop version (*AddTokenGenDotNet*) is supported only. .NET Core version does not implement some token related core functionalities yet.
 
 **Usage**
-aadtokengendotnet.exe userName clientId resource redirectUri [optional authority]
-
-userName,									clientId,							resource,								redirectUri,				authority = null
-user1@YOURDOMAIN.onmicrosoft.com		328**CLIENTID**bf		https://YOURDOMAIN.onmicrosoft.com/YOURAPPNAME   http://netsummitnativeapp 3b0f78fd-01d5-4c43-a2ae-3a6f6b8cabe7
+aadtokengendotnet.exe clientId resource redirectUri [optional authority] [optional secret]
 
 *Remarks*
 If authority is null, token will be requested by AAD common endpoint.
+If secret is null, sign-in dialog window will be showed for user credential input.
 
 **Example 1**
 *Client credentials scenario*
-aadtokengendotnet.exe user1@YOURDOMAIN.onmicrosoft.com 328**CLIENTID**bf https://YOURDOMAIN.onmicrosoft.com/YOURAPPNAME http://netsummitnativeapp 3b0***be7
+
+aadtokengendotnet.exe --clientId=328***********bf --resource=https://YOURDOMAIN.onmicrosoft.com/YOURAPPNAME --redirectUri=http://netsummitnativeapp
 
 **Example 2**
 *Client secret scenario*
-AadTokenGenDotNet.exe --secret=O3F******h0k= --clientId=6f8b2********917f4  --resource=https://iottsystems.onmicrosoft.de/YOURAPPNAME --redirectUri=http://netsummitnativeapp 3b0***be7
+
+aadTokenGenDotNet.exe --secret=O3F******h0k= --clientId=6f8b2********917f4 --resource=https://YOURDOMAIN.onmicrosoft.de/YOURAPPNAME --redirectUri=http://netsummitnativeapp
 
 **Result example**
 
