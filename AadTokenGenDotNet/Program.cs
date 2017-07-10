@@ -11,20 +11,20 @@ namespace AddTokenGenDotNet
         {
             try
             {
-                Console.WriteLine("Genereting token...");
+                Console.WriteLine("Generating token...");
 
                 CommandLineConfigurationProvider cmdLineConfig = new CommandLineConfigurationProvider(args);
 
                 cmdLineConfig.Load();
 
                 if (!cmdLineConfig.TryGet("clientId", out string clientId))
-                    throw new Exception("'clientId' argument must be specified.");
-                
+                    throw new ArgumentException("'clientId' argument must be specified.");
+
                 if (!cmdLineConfig.TryGet("resource", out string resource))
-                    throw new Exception("'resource' argument must be specified");
+                    throw new ArgumentException("'resource' argument must be specified");
 
                 if (!cmdLineConfig.TryGet("redirectUri", out string redirectUri))
-                    throw new Exception("'redirectUri' argument must be specified");
+                    throw new ArgumentException("'redirectUri' argument must be specified");
 
                 cmdLineConfig.TryGet("authority", out string authority);
                 cmdLineConfig.TryGet("secret", out string secret);
@@ -38,26 +38,28 @@ namespace AddTokenGenDotNet
                 }
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(token);
+
+                Console.WriteLine("Press Enter to exit the application.");
+                Console.ReadLine();
             }
             catch (Exception e)
             {
                 if (e != null)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Acquiring a token failed with the following error"+"\n" + e);                    
+                    Console.WriteLine("Acquiring token failed with the following error:" + Environment.NewLine + e);
                 }
                 Console.ResetColor();
-                Console.ReadKey();
                 Console.ReadLine();
             }
         }
 
         /// <summary>
-        /// 
+        /// Gets the AuthenticationContext
         /// </summary>
         /// <param name="authority"></param>
         /// <returns></returns>
-        private static AuthenticationContext getContext(string authority)
+        private static AuthenticationContext getAuthenticationContext(string authority)
         {
             var aadUrl = ConfigurationManager.AppSettings["AadAuthorityUrl"];
 
@@ -72,7 +74,7 @@ namespace AddTokenGenDotNet
         }
 
         /// <summary>
-        /// Creates token by using of grant_type=pasword.
+        /// Creates token by using of grant_type=password&username.
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="clientId"></param>
@@ -82,7 +84,7 @@ namespace AddTokenGenDotNet
         /// <returns></returns>
         private static string createTokenFromClientCredentials(string clientId, string resource, string redirectUri, string authority = null)
         {
-            AuthenticationContext authContext = getContext(authority);
+            AuthenticationContext authContext = getAuthenticationContext(authority);
 
             AuthenticationResult authResult =
                 authContext.AcquireTokenAsync(resource,
@@ -101,10 +103,10 @@ namespace AddTokenGenDotNet
         /// </summary>
         private static string createTokenFromClientSecret(string secret, string clientId, string resource, string redirectUri, string authority = null)
         {
-            AuthenticationContext authContext = getContext(authority);
-            
+            AuthenticationContext authContext = getAuthenticationContext(authority);
+
             ClientCredential clientCred = new ClientCredential(clientId, secret);
-     
+
             AuthenticationResult authResult =
                 authContext.AcquireTokenAsync(resource, clientCred).Result;
 
