@@ -14,15 +14,14 @@ aadtokengendotnet.exe clientId resource redirectUri [optional authority] [option
 If authority is null, token will be requested by AAD common endpoint.
 If secret is null, sign-in dialog window will be showed for user credential input.
 
-##  Creating Token with client credentials
+##  Creating Token with client credentials (user&pwd)
 
 ````
 aadtokengendotnet.exe --clientId=YOURCLIENTID --resource=https://YOURDOMAIN.onmicrosoft.com/YOURAPPNAME --redirectUri=http://netsummitnativeapp
 ````
 
-## Creating token with client secret
+## Creating token with client secret (clientid&secret)
 
-*Client secret scenario*
 ````
 aadTokenGenDotNet.exe --secret=YOURSECRETKEY --clientId=YOURCLIENTID --resource=https://YOURDOMAIN.onmicrosoft.de/YOURAPPNAME --redirectUri=http://netsummitnativeapp
 ````
